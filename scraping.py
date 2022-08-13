@@ -1,7 +1,6 @@
 # import urllib library
 from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
-import json
 import re
 import time
 from selenium import webdriver
@@ -11,37 +10,17 @@ cg = CoinGeckoAPI()
 
 
 def main():
-    scrapeTelegram('https://t.me/nft11official')
-    scrapeTelegram('https://t.me/nft11_en_official')
-    scrapeTelegram('https://t.me/NFT11_PT_BR')
-    scrapeTelegram('https://t.me/nft11_es_official')
-    scrapeTelegram('https://t.me/nft11_vn')
-    scrapeDiscord()
-    scrapeInstagram()
-    scrapeFacebook()
-    cg.get_price(ids='nft11', vs_currencies='usd')['nft11']['usd']
-    cg.get_price(ids='bitcoin', vs_currencies='usd')['bitcoin']['usd']
-    cg.get_coin_info_from_contract_address_by_id('binance-smart-chain', '0x73F67AE7f934FF15beaBf55A28C2Da1eEb9B56Ec')['community_data']['twitter_followers']
-    scrapeBscScan(
-        'https://bscscan.com/token/0x73f67ae7f934ff15beabf55a28c2da1eeb9b56ec')
-    scrapeBscScan(
-        'https://bscscan.com/token/0xc2dea142de50b58f2dc82f2cafda9e08c3323d53')
-    scrapeBscScan(
-        'https://bscscan.com/token/0x6bf87165ea4c3442964752c359c3306d74bf4f3c')
-    scrapeCryptocom()
-    scrapeTofu(
-        'https://tofunft.com/collection/nft11-stadium/items?meta_double_2=1,1&sort=price_asc')
-    scrapeTofu(
-        'https://tofunft.com/collection/nft11-stadium/items?meta_double_2=2,2&sort=price_asc')
-    scrapeTofu(
-        'https://tofunft.com/collection/nft11-stadium/items?meta_double_2=3,3&sort=price_asc')
-    scrapeTofu(
-        'https://tofunft.com/collection/nft11-stadium/items?meta_double_2=4,4&sort=price_asc')
-    scrapeTofu(
-        'https://tofunft.com/collection/nft11-stadium/items?meta_double_2=5,5&sort=price_asc')
-    scrapeTofu(
+    return scrapeTelegram('https://t.me/nft11official'), scrapeTelegram('https://t.me/nft11_en_official'), scrapeTelegram('https://t.me/NFT11_PT_BR'), scrapeTelegram('https://t.me/nft11_es_official'), scrapeTelegram('https://t.me/nft11_vn'), scrapeDiscord(), cg.get_coin_info_from_contract_address_by_id('binance-smart-chain', '0x73F67AE7f934FF15beaBf55A28C2Da1eEb9B56Ec')['community_data']['twitter_followers'], scrapeInstagram(), scrapeFacebook(), cg.get_price(ids='nft11', vs_currencies='usd')['nft11']['usd'], scrapeBscScan(
+        'https://bscscan.com/token/0x73f67ae7f934ff15beabf55a28c2da1eeb9b56ec'), cg.get_price(ids='nft11', vs_currencies='usd', include_24hr_vol=True)['nft11']['usd_24h_vol'], cg.get_price(ids='bitcoin', vs_currencies='usd')['bitcoin']['usd'], scrapeCryptocom(), scrapeBscScan(
+        'https://bscscan.com/token/0xc2dea142de50b58f2dc82f2cafda9e08c3323d53'), scrapeBscScan(
+        'https://bscscan.com/token/0x6bf87165ea4c3442964752c359c3306d74bf4f3c'), scrapeTofu(
+        'https://tofunft.com/collection/nft11-stadium/items?meta_double_2=1,1&sort=price_asc'), scrapeTofu(
+        'https://tofunft.com/collection/nft11-stadium/items?meta_double_2=2,2&sort=price_asc'), scrapeTofu(
+        'https://tofunft.com/collection/nft11-stadium/items?meta_double_2=3,3&sort=price_asc'), scrapeTofu(
+        'https://tofunft.com/collection/nft11-stadium/items?meta_double_2=4,4&sort=price_asc'), scrapeTofu(
+        'https://tofunft.com/collection/nft11-stadium/items?meta_double_2=5,5&sort=price_asc'), scrapeTofu(
         'https://tofunft.com/collection/nft11-stadium/items?meta_double_2=6,6&sort=price_asc')
-	
+
 
 def scrapeTelegram(url):
     # store the response of URL
@@ -55,6 +34,7 @@ def scrapeTelegram(url):
         'div', {'class': 'tgme_page_extra'}).text.replace(' ', '')
 
     tgGroupMembers = re.findall('[0-9]+', scrapedGroupMembers)[0]
+    print(tgGroupMembers)
     return tgGroupMembers
 
 
@@ -76,6 +56,8 @@ def scrapeDiscord():
     # Get the numbers from a string and use the [1] index to get the number of members
     discordGroupMembers = re.findall('[0-9]+', scrapedGroupMembers)[1]
 
+    print(discordGroupMembers)
+
     return discordGroupMembers
 
 
@@ -92,7 +74,7 @@ def scrapeInstagram():
 
     instagramFollowers = re.findall(
         '[0-9]+', soup.find('div', {'class': 'BNeawe s3v9rd AP7Wnd'}).text)[0]
-
+    print(instagramFollowers)
     return instagramFollowers
 
 
@@ -116,6 +98,8 @@ def scrapeFacebook():
     facebookLikes = re.findall('[0-9]+', facebookData)
     facebookFollowers = re.findall('[0-9]+', facebookData2)
 
+    print(facebookLikes[0], facebookFollowers[0])
+
     return (facebookLikes[0], facebookFollowers[0])
 
 
@@ -130,6 +114,7 @@ def scrapeBscScan(url):
     soup = BeautifulSoup(response, 'html.parser')
     holders = re.findall(
         '[0-9]+', (soup.find('div', {'class': 'mr-3'}).text.replace(',', '')))[0]
+    print(holders)
     return holders
 
 
@@ -143,6 +128,8 @@ def scrapeCryptocom():
     soup = BeautifulSoup(response, 'html.parser')
     gameFiMC = soup.find('div', {
                          'class': 'css-qznh9z'}).text.replace('$', '').replace('B', '').replace(' ', '')
+
+    print(gameFiMC)
     return gameFiMC
 
 
@@ -158,7 +145,6 @@ def scrapeTofu(url):
     soup = BeautifulSoup(page, 'html.parser')  # parsing html to text
     lowestPrice = soup.find('p', {'class': 'chakra-text css-0'}
                             ).text.replace(' ', '').replace('BNB', '')
-    return (lowestPrice)
+    print(lowestPrice)
+    return lowestPrice
 
-
-main()
