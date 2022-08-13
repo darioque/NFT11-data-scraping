@@ -11,15 +11,15 @@ cg = CoinGeckoAPI()
 
 def main():
     return scrapeTelegram('https://t.me/nft11official'), scrapeTelegram('https://t.me/nft11_en_official'), scrapeTelegram('https://t.me/NFT11_PT_BR'), scrapeTelegram('https://t.me/nft11_es_official'), scrapeTelegram('https://t.me/nft11_vn'), scrapeDiscord(), cg.get_coin_info_from_contract_address_by_id('binance-smart-chain', '0x73F67AE7f934FF15beaBf55A28C2Da1eEb9B56Ec')['community_data']['twitter_followers'], scrapeInstagram(), scrapeFacebook(), cg.get_price(ids='nft11', vs_currencies='usd')['nft11']['usd'], scrapeBscScan(
-        'https://bscscan.com/token/0x73f67ae7f934ff15beabf55a28c2da1eeb9b56ec'), cg.get_price(ids='nft11', vs_currencies='usd', include_24hr_vol=True)['nft11']['usd_24h_vol'], cg.get_price(ids='bitcoin', vs_currencies='usd')['bitcoin']['usd'], scrapeCryptocom(), scrapeBscScan(
-        'https://bscscan.com/token/0xc2dea142de50b58f2dc82f2cafda9e08c3323d53'), scrapeTofu(
+        'https://bscscan.com/token/0x73f67ae7f934ff15beabf55a28c2da1eeb9b56ec'), cg.get_price(ids='nft11', vs_currencies='usd', include_24hr_vol=True)['nft11']['usd_24h_vol'], cg.get_price(ids='bitcoin', vs_currencies='usd')['bitcoin']['usd'], scrapeCryptocom(), scrapeTofuLegend(), scrapeBscScan(
+        'https://bscscan.com/token/0xc2dea142de50b58f2dc82f2cafda9e08c3323d53'), scrapeTofuVolume(), scrapeTofu(
         'https://tofunft.com/collection/nft11-stadium/items?meta_double_2=1,1&sort=price_asc'), scrapeTofu(
         'https://tofunft.com/collection/nft11-stadium/items?meta_double_2=2,2&sort=price_asc'), scrapeTofu(
         'https://tofunft.com/collection/nft11-stadium/items?meta_double_2=3,3&sort=price_asc'), scrapeTofu(
         'https://tofunft.com/collection/nft11-stadium/items?meta_double_2=4,4&sort=price_asc'), scrapeTofu(
         'https://tofunft.com/collection/nft11-stadium/items?meta_double_2=5,5&sort=price_asc'), scrapeTofu(
         'https://tofunft.com/collection/nft11-stadium/items?meta_double_2=6,6&sort=price_asc'), scrapeBscScan(
-        'https://bscscan.com/token/0x6bf87165ea4c3442964752c359c3306d74bf4f3c')
+        'https://bscscan.com/token/0x6bf87165ea4c3442964752c359c3306d74bf4f3c'), scrapeStadiumSales()
 
 
 def scrapeTelegram(url):
@@ -104,9 +104,6 @@ def scrapeFacebook():
 
 
 def scrapeBscScan(url):
-    # store the URL in url as
-    # parameter for urlopen
-
     # store the response of URL
     r = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
 
@@ -148,3 +145,64 @@ def scrapeTofu(url):
     print(lowestPrice)
     return lowestPrice
 
+
+def scrapeTofuLegend():
+    options = Options()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    driver = webdriver.Firefox(options=options)
+    url = "https://tofunft.com/collection/nft11players/items?sort=price_asc"
+    driver.get(url)
+    time.sleep(5)  # time to wait to start scraping the html
+    page = driver.page_source  # raw html
+    driver.quit()
+    soup = BeautifulSoup(page, 'html.parser')  # parsing html to text
+    lowestPrices = soup.findAll('p', {'class': 'chakra-text css-1ucdead'})
+    for i in range(len(lowestPrices)):
+        if 'Legend' in lowestPrices[i].text:
+            lowestPrice = soup.findAll('p', {'class': 'chakra-text css-0'})[i].text.replace(' ', '').replace('BNB', '')
+            print(lowestPrice)
+            return lowestPrice
+
+def scrapeTofuVolume():
+    options = Options()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    driver = webdriver.Firefox(options=options)
+    url = "https://tofunft.com/collection/nft11players/activities"
+    driver.get(url)
+    time.sleep(5)  # time to wait to start scraping the html
+    page = driver.page_source  # raw html
+    driver.quit()
+    soup = BeautifulSoup(page, 'html.parser')  # parsing html to text
+    lastSales = soup.findAll('span', {'class': 'chakra-text css-1dp94ug'})
+    salePrices = soup.findAll('p', {'class': 'chakra-text css-1uhznsn'})
+    amountOfSales = 0
+    volumeOfSales = 0
+    for i in range(len(lastSales)):
+        if 'hours' in lastSales[i].text:
+            amountOfSales += 1
+            volumeOfSales += float(salePrices[i].text.replace(' ', '').replace('BNB', ''))
+        else:
+            print(amountOfSales, volumeOfSales)
+            return amountOfSales, volumeOfSales
+
+def scrapeStadiumSales():
+    options = Options()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    driver = webdriver.Firefox(options=options)
+    url = "https://tofunft.com/collection/nft11-stadium/activities"
+    driver.get(url)
+    time.sleep(5)  # time to wait to start scraping the html
+    page = driver.page_source  # raw html
+    driver.quit()
+    soup = BeautifulSoup(page, 'html.parser')  # parsing html to text
+    lastSales = soup.findAll('span', {'class': 'chakra-text css-1dp94ug'})
+    amountOfSales = 0
+    for i in range(len(lastSales)):
+        if 'hours' in lastSales[i].text:
+            amountOfSales += 1
+        else:
+            print(amountOfSales)
+            return amountOfSales

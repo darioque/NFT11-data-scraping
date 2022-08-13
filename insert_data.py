@@ -1,5 +1,6 @@
 import gspread 
 import scraping
+import time
 
 # Access service account using json credentials on %AppData%\Roaming\gspread\service_account.json
 sa = gspread.service_account()
@@ -12,8 +13,8 @@ wks = sh.worksheet('Growth')
 # Get number of columns in the worksheet
 columnCount = wks.col_count
 
-ann, en, pt, es, vt, disc, twit, insta, (likes, followers), price, hold, vol, btc, game, legH, t1, t2, t3, t4, t5, t6, seatH = scraping.main()
+ann, en, pt, es, vt, disc, twit, insta, (likes, followers), price, hold, vol, btc, game, legP, legH, (legS, legV), t1, t2, t3, t4, t5, t6, seatH, seatS = scraping.main()
 
 wks.add_cols(1)
 # Insert a new column at the end of the worksheet with data
-wks.insert_cols([['Saturday 13', ann, en, pt , es, vt, (int(en) + int(pt) + int(es) + int(vt)), disc, twit, insta, likes, followers, price, hold, vol, btc, game, '-', legH, '-', '-', t1, '0', t2, '0', t3, '0', t4, '0', t5, '0', t6, '0', seatH, '0']], columnCount+1)
+wks.insert_cols([[time.strftime("%A %d"), ann, en, pt , es, vt, (int(en) + int(pt) + int(es) + int(vt)), disc, twit, insta, likes, followers, price, hold, vol, btc, game, legP, legH, legV, legS, t1, '0', t2, '0', t3, '0', t4, '0', t5, '0', t6, '0', seatH, seatS]], columnCount+1)
