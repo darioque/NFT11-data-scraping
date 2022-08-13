@@ -134,8 +134,6 @@ def scrapeBscScan(url):
 
 
 def scrapeCryptocom():
-    # store the URL in url as
-    # parameter for urlopen
     url = "https://crypto.com/price/categories/gamefi"
 
     # store the response of URL
@@ -149,8 +147,6 @@ def scrapeCryptocom():
 
 
 def scrapeTofu(url):
-    # store the URL in url as
-    # parameter for urlopen
     options = Options()
     options.add_argument('--headless')
     options.add_argument('--disable-gpu')
