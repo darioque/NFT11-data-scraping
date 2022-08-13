@@ -1,0 +1,8 @@
+*.env
+*.js
+*.json
+utils/
+*.xlsx
+outputFiles/
+node_modules
+*.log
