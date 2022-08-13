@@ -17,4 +17,4 @@ ann, en, pt, es, vt, disc, twit, insta, (likes, followers), price, hold, vol, bt
 
 wks.add_cols(1)
 # Insert a new column at the end of the worksheet with data
-wks.insert_cols([[time.strftime("%A %d"), ann, en, pt , es, vt, (int(en) + int(pt) + int(es) + int(vt)), disc, twit, insta, likes, followers, price, hold, vol, btc, game, legP, legH, legV, legS, t1, '0', t2, '0', t3, '0', t4, '0', t5, '0', t6, '0', seatH, seatS]], columnCount+1)
+wks.insert_cols([[time.strftime("%A %d"), ann, en, pt , es, vt, (int(en) + int(pt) + int(es) + int(vt)), disc, twit, insta, likes, followers, price, hold, vol, btc, game, legP, legH, legV, legS, t1, '0', t2, '0', t3, '0', t4, '0', t5, '0', t6, '0', seatH, seatS]], columnCount + 1)
