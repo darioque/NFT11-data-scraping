@@ -177,10 +177,11 @@ def scrapeTofuVolume():
     soup = BeautifulSoup(page, 'html.parser')  # parsing html to text
     lastSales = soup.findAll('span', {'class': 'chakra-text css-1dp94ug'})
     salePrices = soup.findAll('p', {'class': 'chakra-text css-1uhznsn'})
+    legendTypes = soup.findAll('a', { 'class': 'chakra-link css-1jw7pf0'})
     amountOfSales = 0
     volumeOfSales = 0
     for i in range(len(lastSales)):
-        if 'hours' in lastSales[i].text:
+        if 'hours' in lastSales[i].text and 'Legend' in legendTypes[i].text:
             amountOfSales += 1
             volumeOfSales += float(salePrices[i].text.replace(' ', '').replace('BNB', ''))
         else:
