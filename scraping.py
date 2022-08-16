@@ -35,7 +35,7 @@ def scrapeTelegram(url):
 
     tgGroupMembers = re.findall('[0-9]+', scrapedGroupMembers)[0]
     print(tgGroupMembers)
-    return tgGroupMembers
+    return int(tgGroupMembers)
 
 
 def scrapeDiscord():
@@ -58,7 +58,7 @@ def scrapeDiscord():
 
     print(discordGroupMembers)
 
-    return discordGroupMembers
+    return int(discordGroupMembers)
 
 
 def scrapeInstagram():
@@ -100,7 +100,7 @@ def scrapeFacebook():
 
     print(facebookLikes[0], facebookFollowers[0])
 
-    return (facebookLikes[0], facebookFollowers[0])
+    return (int(facebookLikes[0]), int(facebookFollowers[0]))
 
 
 def scrapeBscScan(url):
@@ -112,7 +112,7 @@ def scrapeBscScan(url):
     holders = re.findall(
         '[0-9]+', (soup.find('div', {'class': 'mr-3'}).text.replace(',', '')))[0]
     print(holders)
-    return holders
+    return int(holders)
 
 
 def scrapeCryptocom():
@@ -127,7 +127,7 @@ def scrapeCryptocom():
                          'class': 'css-qznh9z'}).text.replace('$', '').replace('B', '').replace(' ', '')
 
     print(gameFiMC)
-    return gameFiMC
+    return float(gameFiMC)
 
 
 def scrapeTofu(url):
@@ -143,7 +143,7 @@ def scrapeTofu(url):
     lowestPrice = soup.find('p', {'class': 'chakra-text css-0'}
                             ).text.replace(' ', '').replace('BNB', '')
     print(lowestPrice)
-    return lowestPrice
+    return float(lowestPrice)
 
 
 def scrapeTofuLegend():
@@ -162,7 +162,7 @@ def scrapeTofuLegend():
         if 'Legend' in lowestPrices[i].text:
             lowestPrice = soup.findAll('p', {'class': 'chakra-text css-0'})[i].text.replace(' ', '').replace('BNB', '')
             print(lowestPrice)
-            return lowestPrice
+            return float(lowestPrice)
 
 def scrapeTofuVolume():
     options = Options()
@@ -186,7 +186,7 @@ def scrapeTofuVolume():
             volumeOfSales += float(salePrices[i].text.replace(' ', '').replace('BNB', ''))
         else:
             print(amountOfSales, volumeOfSales)
-            return amountOfSales, volumeOfSales
+            return int(amountOfSales), int(volumeOfSales)
 
 def scrapeStadiumSales():
     options = Options()
@@ -206,4 +206,4 @@ def scrapeStadiumSales():
             amountOfSales += 1
         else:
             print(amountOfSales)
-            return amountOfSales
+            return (amountOfSales)
