@@ -10,7 +10,7 @@ cg = CoinGeckoAPI()
 
 
 def main():
-    return scrapeTelegram('https://t.me/nft11official'), scrapeTelegram('https://t.me/nft11_en_official'), scrapeTelegram('https://t.me/NFT11_PT_BR'), scrapeTelegram('https://t.me/nft11_es_official'), scrapeTelegram('https://t.me/nft11_vn'), scrapeDiscord(), cg.get_coin_info_from_contract_address_by_id('binance-smart-chain', '0x73F67AE7f934FF15beaBf55A28C2Da1eEb9B56Ec')['community_data']['twitter_followers'], scrapeInstagram(), scrapeFacebook(), cg.get_price(ids='nft11', vs_currencies='usd')['nft11']['usd'], scrapeBscScan(
+    return scrapeTelegram('https://t.me/nft11official'), scrapeTelegram('https://t.me/nft11_en_official'), scrapeTelegram('https://t.me/NFT11_PT_BR'), scrapeTelegram('https://t.me/nft11_es_official'), scrapeTelegram('https://t.me/nft11_vn'), scrapeDiscord(), int(cg.get_coin_info_from_contract_address_by_id('binance-smart-chain', '0x73F67AE7f934FF15beaBf55A28C2Da1eEb9B56Ec')['community_data']['twitter_followers']), scrapeInstagram(), scrapeFacebook(), cg.get_price(ids='nft11', vs_currencies='usd')['nft11']['usd'], scrapeBscScan(
         'https://bscscan.com/token/0x73f67ae7f934ff15beabf55a28c2da1eeb9b56ec'), cg.get_price(ids='nft11', vs_currencies='usd', include_24hr_vol=True)['nft11']['usd_24h_vol'], cg.get_price(ids='bitcoin', vs_currencies='usd')['bitcoin']['usd'], scrapeCryptocom(), scrapeTofuLegend(), scrapeBscScan(
         'https://bscscan.com/token/0xc2dea142de50b58f2dc82f2cafda9e08c3323d53'), scrapeTofuVolume(), scrapeTofu(
         'https://tofunft.com/collection/nft11-stadium/items?meta_double_2=1,1&sort=price_asc'), scrapeTofu(
@@ -75,7 +75,7 @@ def scrapeInstagram():
     instagramFollowers = re.findall(
         '[0-9]+', soup.find('div', {'class': 'BNeawe s3v9rd AP7Wnd'}).text)[0]
     print(instagramFollowers)
-    return instagramFollowers
+    return int(instagramFollowers)
 
 
 def scrapeFacebook():
@@ -91,10 +91,9 @@ def scrapeFacebook():
     page = driver.page_source  # raw html
     driver.quit()
     soup = BeautifulSoup(page, 'html.parser')  # parsing html to text
-    rawFacebookData = soup.findAll('span', {
-                                   'class': 'd2edcug0 hpfvmrgz qv66sw1b c1et5uql lr9zc1uh jq4qci2q a3bd9o3v b1v8xokw oo9gr5id'})
-    facebookData = rawFacebookData[0].text.replace(',', '')
-    facebookData2 = rawFacebookData[2].text.replace(',', '')
+    rawFacebookData = soup.findAll('span')
+    facebookData = rawFacebookData[33].text.replace(',', '')
+    facebookData2 = rawFacebookData[36].text.replace(',', '')
     facebookLikes = re.findall('[0-9]+', facebookData)
     facebookFollowers = re.findall('[0-9]+', facebookData2)
 
@@ -181,12 +180,12 @@ def scrapeTofuVolume():
     amountOfSales = 0
     volumeOfSales = 0
     for i in range(len(lastSales)):
-        if 'hours' in lastSales[i].text and 'Legend' in legendTypes[i].text:
+        if 'hour' in lastSales[i].text and 'Legend' in legendTypes[i].text:
             amountOfSales += 1
             volumeOfSales += float(salePrices[i].text.replace(' ', '').replace('BNB', ''))
         else:
             print(amountOfSales, volumeOfSales)
-            return int(amountOfSales), int(volumeOfSales)
+            return amountOfSales, volumeOfSales
 
 def scrapeStadiumSales():
     options = Options()
@@ -202,7 +201,7 @@ def scrapeStadiumSales():
     lastSales = soup.findAll('span', {'class': 'chakra-text css-1dp94ug'})
     amountOfSales = 0
     for i in range(len(lastSales)):
-        if 'hours' in lastSales[i].text:
+        if 'hour' in lastSales[i].text:
             amountOfSales += 1
         else:
             print(amountOfSales)
