@@ -157,11 +157,12 @@ def scrapeTofuLegend():
     driver.quit()
     soup = BeautifulSoup(page, 'html.parser')  # parsing html to text
     lowestPrices = soup.findAll('p', {'class': 'chakra-text css-1ucdead'})
+    lowestPriceRegulars = soup.findAll('p', {'class': 'chakra-text css-0'})[0].text.replace(' ', '').replace('BNB', '')
     for i in range(len(lowestPrices)):
         if 'Legend' in lowestPrices[i].text:
             lowestPrice = soup.findAll('p', {'class': 'chakra-text css-0'})[i].text.replace(' ', '').replace('BNB', '')
-            print(lowestPrice)
-            return float(lowestPrice)
+            print(lowestPrice, lowestPriceRegulars)
+            return float(lowestPrice), float(lowestPriceRegulars)
 
 def scrapeTofuVolume():
     options = Options()
