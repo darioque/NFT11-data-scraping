@@ -11,7 +11,7 @@ cg = CoinGeckoAPI()
 
 def main():
     return scrapeTelegram('https://t.me/nft11official'), scrapeTelegram('https://t.me/nft11_en_official'), scrapeTelegram('https://t.me/NFT11_PT_BR'), scrapeTelegram('https://t.me/nft11_es_official'), scrapeTelegram('https://t.me/nft11_vn'), scrapeDiscord(), int(cg.get_coin_info_from_contract_address_by_id('binance-smart-chain', '0x73F67AE7f934FF15beaBf55A28C2Da1eEb9B56Ec')['community_data']['twitter_followers']), scrapeInstagram(), scrapeFacebook(), cg.get_price(ids='nft11', vs_currencies='usd')['nft11']['usd'], scrapeBscScan(
-        'https://bscscan.com/token/0x73f67ae7f934ff15beabf55a28c2da1eeb9b56ec'), cg.get_price(ids='nft11', vs_currencies='usd', include_24hr_vol=True)['nft11']['usd_24h_vol'], cg.get_price(ids='bitcoin', vs_currencies='usd')['bitcoin']['usd'], scrapeCryptocom(), scrapeTofuLegend(), scrapeBscScan(
+        'https://bscscan.com/token/0x73f67ae7f934ff15beabf55a28c2da1eeb9b56ec'), cg.get_price(ids='nft11', vs_currencies='usd', include_24hr_vol=True)['nft11']['usd_24h_vol'], cg.get_price(ids='bitcoin', vs_currencies='usd')['bitcoin']['usd'], cg.get_price(ids='binancecoin', vs_currencies='usd')['binancecoin']['usd'], scrapeCryptocom(), scrapeTofuLegend(), scrapeBscScan(
         'https://bscscan.com/token/0xc2dea142de50b58f2dc82f2cafda9e08c3323d53'), scrapeTofuVolume(), scrapeTofu(
         'https://tofunft.com/collection/nft11-stadium/items?meta_double_2=1,1&sort=price_asc'), scrapeTofu(
         'https://tofunft.com/collection/nft11-stadium/items?meta_double_2=2,2&sort=price_asc'), scrapeTofu(

@@ -6,3 +6,4 @@ utils/
 outputFiles/
 node_modules
 *.log
+test.py
