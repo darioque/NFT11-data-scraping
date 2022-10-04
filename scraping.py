@@ -94,10 +94,9 @@ def scrapeFacebook():
     soup = BeautifulSoup(page, 'html.parser')  # parsing html to text
     rawFacebookData = soup.findAll('span', {'dir': 'auto'})[4].text
     facebookData = rawFacebookData[0:2] + '000'
-    facebookData2 = rawFacebookData[12:14] + '000'
     print(facebookData)
-    print(facebookData2)
-    return (int(facebookData[0]), int(facebookData2[0]))
+    print(facebookData)
+    return (int(facebookData), int(facebookData))
 
 
 def scrapeBscScan(url):
@@ -248,3 +247,5 @@ def scrapeStadiumSales():
         else:
             print(amountOfSales)
             return (amountOfSales)
+
+scrapeFacebook()
