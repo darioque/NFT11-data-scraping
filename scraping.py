@@ -197,7 +197,7 @@ def scrapeTofuVolume():
     amountOfSales = 0
     volumeOfSales = 0
     for i in range(len(lastSales)):
-        if 'hour' in lastSales[i].text and 'Legend' in legendTypes[i].text:
+        if ('hour' in lastSales[i].text or 'minutes' in lastSales[i].text) and 'Legend' in legendTypes[i].text:
             amountOfSales += 1
             volumeOfSales += float(salePrices[i].text.replace(' ', '').replace('BNB', ''))
         else:
@@ -221,7 +221,7 @@ def scrapeTofuVolume2():
     amountOfSales = 0
     volumeOfSales = 0
     for i in range(len(lastSales)):
-        if 'hour' in lastSales[i].text and 'Legend' in legendTypes[i].text:
+        if ('hour' in lastSales[i].text or 'minutes' in lastSales[i].text) and 'Legend' in legendTypes[i].text:
             amountOfSales += 1
             volumeOfSales += float(salePrices[i].text.replace(' ', '').replace('BNB', ''))
         else:
@@ -247,5 +247,3 @@ def scrapeStadiumSales():
         else:
             print(amountOfSales)
             return (amountOfSales)
-
-scrapeFacebook()
