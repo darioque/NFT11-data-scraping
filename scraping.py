@@ -200,9 +200,8 @@ def scrapeTofuVolume():
         if ('hour' in lastSales[i].text or 'minutes' in lastSales[i].text) and 'Legend' in legendTypes[i].text:
             amountOfSales += 1
             volumeOfSales += float(salePrices[i].text.replace(' ', '').replace('BNB', ''))
-        else:
-            print(amountOfSales, volumeOfSales)
-            return amountOfSales, volumeOfSales
+    print(amountOfSales, volumeOfSales)
+    return amountOfSales, volumeOfSales
 
 def scrapeTofuVolume2():
     options = Options()
@@ -224,9 +223,8 @@ def scrapeTofuVolume2():
         if ('hour' in lastSales[i].text or 'minutes' in lastSales[i].text) and 'Legend' in legendTypes[i].text:
             amountOfSales += 1
             volumeOfSales += float(salePrices[i].text.replace(' ', '').replace('BNB', ''))
-        else:
-            print(amountOfSales, volumeOfSales)
-            return amountOfSales, volumeOfSales
+    print(amountOfSales, volumeOfSales)
+    return amountOfSales, volumeOfSales
 
 def scrapeStadiumSales():
     options = Options()

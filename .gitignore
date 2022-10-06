@@ -7,3 +7,4 @@ outputFiles/
 node_modules
 *.log
 test.py
+__pycache__/scraping.cpython-310.pyc
