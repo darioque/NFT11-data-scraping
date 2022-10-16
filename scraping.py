@@ -79,24 +79,40 @@ def scrapeInstagram():
     return int(instagramFollowers)
 
 
+# def scrapeFacebook():
+#     # store the URL in url as
+#     # parameter for urlopen
+#     url = "https://www.google.com/search?q=facebook+nft11"
+#     options = Options()
+#     options.add_argument('--headless')
+#     options.add_argument('--disable-gpu')
+#     driver = webdriver.Firefox(options=options)
+#     driver.get(url)
+#     time.sleep(5)  # time to wait to start scraping the html
+#     page = driver.page_source  # raw html
+#     driver.quit()
+#     soup = BeautifulSoup(page, 'html.parser')  # parsing html to text
+#     print(soup)
+#     rawFacebookData = soup.findAll('span', {'dir': 'auto'})
+#     facebookData = rawFacebookData[0:2] + '000'
+#     print(facebookData)
+#     print(facebookData)
+#     return (int(facebookData), int(facebookData))
+    
 def scrapeFacebook():
     # store the URL in url as
     # parameter for urlopen
-    url = "https://www.facebook.com/nft11"
-    options = Options()
-    options.add_argument('--headless')
-    options.add_argument('--disable-gpu')
-    driver = webdriver.Firefox(options=options)
-    driver.get(url)
-    time.sleep(5)  # time to wait to start scraping the html
-    page = driver.page_source  # raw html
-    driver.quit()
-    soup = BeautifulSoup(page, 'html.parser')  # parsing html to text
-    rawFacebookData = soup.findAll('span', {'dir': 'auto'})[4].text
-    facebookData = rawFacebookData[0:2] + '000'
-    print(facebookData)
-    print(facebookData)
-    return (int(facebookData), int(facebookData))
+    url = "https://www.google.com/search?q=facebook+nft11"
+    # store the response of URL
+    r = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+
+    response = urlopen(r).read()
+    soup = BeautifulSoup(response, 'html.parser')
+    facebookFollowers = re.findall(
+        '[0-9]+', soup.find('div', {'class': 'BNeawe s3v9rd AP7Wnd'}).text)[4]
+    facebookLikes = facebookFollowers
+    print(facebookFollowers, facebookLikes)
+    return (int(facebookFollowers), int(facebookLikes))
 
 
 def scrapeBscScan(url):
