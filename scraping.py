@@ -59,7 +59,7 @@ def scrapeTelegram(url):
 def scrapeDiscord():
     # store the URL in url as
     # parameter for urlopen
-    url = "https://discord.gg/7p23kQ2Z"
+    url = "https://discord.com/invite/nft11"
 
     # store the response of URL
     r = Request(url, headers={'User-Agent': 'Mozilla/5.0'})

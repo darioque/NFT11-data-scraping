@@ -1,0 +1,23 @@
+{
+  "name": "nft11",
+  "version": "1.0.0",
+  "description": "",
+  "main": "LinkedList.js",
+  "scripts": {
+    "test": "node ./node_modules/mocha/bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darioque/NFT11-data-scraping.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/darioque/NFT11-data-scraping/issues"
+  },
+  "homepage": "https://github.com/darioque/NFT11-data-scraping#readme",
+  "dependencies": {
+    "chai": "^4.3.7"
+  }
+}
